@@ -29,6 +29,7 @@ public class SocketIoServer implements InitializingBean, DisposableBean {
         Configuration config = new Configuration();
         config.setPort(8888);
         SocketConfig socketConfig = config.getSocketConfig();
+        // 避免netty-socketio服务关闭并启动后，报Address already in use
         socketConfig.setReuseAddress(true);
         server = new SocketIOServer(config);
         server.addConnectListener(client -> log.info(client.getRemoteAddress() + "新客户端接入"));
